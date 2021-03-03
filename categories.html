@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">    <link rel="stylesheet" href="css/style.css">
+    <title>Blog</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark py-0 pr-0 pr-sm-2">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Blogen</a>
+            
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item mr-3 active">
+                        <a class="nav-link" href="index.html">Dashboard <span class="sr-only">(current)</span></a>
+                    </li>
+
+                    <li class="nav-item mr-3">
+                        <a class="nav-link" href="posts.html">Posts</a>
+                    </li>
+
+                    <li class="nav-item mr-3">
+                        <a class="nav-link" href="categories.html" tabindex="-1" aria-disabled="true">Categories</a>
+                    </li>
+                    
+                    <li class="nav-item mr-3">
+                        <a class="nav-link" href="users.html" tabindex="-1" aria-disabled="true">Users</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item mr-3 dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-user"></i>
+                            Welcome Brad
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="profile.html">
+                            <i class="fas fa-user-circle"></i>
+                            Profile
+                        </a>
+                        <a class="dropdown-item" href="settings.html">
+                            <i class="fas fa-cog"></i>
+                            Settings
+                        </a>
+                        </div>
+                    </li>
+                    <li class="nav-item mr-3 pb-sm-1">
+                        <a class="nav-link" href="login.html">
+                            <i class="fas fa-user-times"></i>
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+                
+            </div>
+        </div>
+    </nav>
+
+    <!-- HEADER -->
+
+    <header id="header" class="bg-success text-white">
+        <div class="container py-2 ">
+            <h1>
+                <i class="fas fa-folder"></i>
+                Categories
+            </h1>
+        </div>
+    </header>
+
+    <!-- SEARCHER -->
+
+    <section id="searcher" class="py-4">
+        <div class="container">
+            <div class="col-sm-6 offset-sm-6">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Search Categories...">
+                    <div class="input-group-append">
+                        <button class="btn btn-success" type="button">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>    
+    </section>
+
+    <!-- POSTS TABLE -->
+
+    <section id="posts-table">
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Latest Categories</h4>
+                </div>
+                <table class="table table-striped mb-0">
+                    <thead class="thead-dark">
+                        <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Date</th>
+                        <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        <td>1</td>
+                        <td>Web Development</td>
+                        <td>May 10 2020</td>
+                        <td><a href="details.html" class="btn btn-secondary">
+                            <i class="fas fa-angle-double-right"></i>
+                            Details
+                        </a></td>
+                        </tr>
+                        <tr>
+                        <td>2</td>
+                        <td>Tech Gadgets</td>
+                        <td>May 11 2020</td>
+                        <td><a href="details.html" class="btn btn-secondary">
+                            <i class="fas fa-angle-double-right"></i>
+                            Details
+                        </a></td>
+                        </tr>
+                        <tr>
+                        <td>3</td>
+                        <td>Business</td>
+                        <td>May 13 2020</td>
+                        <td><a href="details.html" class="btn btn-secondary">
+                            <i class="fas fa-angle-double-right"></i>
+                            Details
+                        </a></td>
+                        </tr>
+                        <tr>
+                        <td>4</td>
+                        <td>Health & Wellness</td>
+                        <td>May 15 2020</td>
+                        <td><a href="details.html" class="btn btn-secondary">
+                            <i class="fas fa-angle-double-right"></i>
+                            Details
+                        </a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+           
+    </div>
+
+    </section>
+
+
+
+        <footer id="main-footer" class="mt-5 bg-dark text-center text-white">
+        <div class="p-5 lead">
+            Copyright &copy; 2021 Blogen
+        </div>
+    </footer>
+
+
+
+      
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+    <script>
+        //Get the current year of the copyright
+        $('#year').text(new Date().getFullYear());
+    </script>
+</body>
+</html>

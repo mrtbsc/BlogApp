@@ -1,0 +1,206 @@
+<% layout('layouts/boilerplate')%>
+
+<!-- HEADER -->
+
+<header id="header" class="bg-primary text-white">
+    <div class="container py-2 ">
+        <h1>
+            <i class="fas fa-pencil-alt"></i>
+            Posts
+        </h1>
+    </div>
+</header>
+
+<!-- ADD BUTTONS -->
+
+    <section id="buttons" class="bg-light p-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <button class="btn btn-block btn-primary" data-toggle="modal" data-target="#add-post-modal">
+                        <i class="fas fa-plus"></i>
+                        Add Post
+                    </button>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-block btn-success" data-toggle="modal" data-target="#add-category-modal">
+                        <i class="fas fa-plus"></i>
+                        Add Category
+                    </button>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-block btn-warning" data-toggle="modal" data-target="#add-user-modal">
+                        <i class="fas fa-plus"></i>
+                        Add User
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+<!-- MAIN -->
+<section id="main" class="pt-4">
+    <div class="container">
+        <div class="row">
+            
+            <!-- POSTS TABLE -->
+            <div class="col-md-9">
+                <div class="card">
+                    <%- include('./partials/posts-table')%>    
+                </div>
+   
+            </div>
+
+            <!-- VIEW BUTTONS -->
+            <div class="col-md-3">
+                <div class="card bg-primary text-white text-center mb-3">
+                    <div class="card-body">
+                        <div class="card-title"><h3>Posts</h3></div>
+                        <div class="card-text display-4">
+                            <i class="fas fa-pencil-alt"></i>
+                            6
+                        </div>
+                        <a href="/posts" class="btn btn-sm mt-2 btn-outline-light">View</a>
+                    </div>
+                </div>
+                <div class="card bg-success text-white text-center mb-3">
+                    <div class="card-body">
+                        <div class="card-title"><h3>Categories</h3></div>
+                        <div class="card-text display-4">
+                            <i class="fas fa-folder"></i>
+                            4
+                        </div>
+                        <a a href="/categories" class="btn btn-sm mt-2 btn-outline-light">View</a>
+                    </div>
+                </div>
+                <div class="card bg-warning text-white text-center mb-3">
+                    <div class="card-body">
+                        <div class="card-title"><h3>Users</h3></div>
+                        <div class="card-text display-4">
+                            <i class="fas fa-users"></i>
+                            4
+                        </div>
+                        <a href="/users" class="btn btn-sm mt-2 btn-outline-light">View</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- BUTTON MODALS -->
+    <!-- POST MODAL -->
+    <div class="modal fade" id="add-post-modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Add Post</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" name="title" id="title" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <select id="category" class="form-control">
+                                <option>Web Development</option>
+                                <option>Tech Gadgets</option>
+                                <option>Business</option>
+                                <option>Health & Wellness</option>
+                            </select>   
+                        </div>
+
+                        <div class="form-group">
+                            <label for="post-image">Upload Image</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="post-image">
+                                <label class="custom-file-label" for="post-image">Choose file</label>
+                            </div>
+                            <small class="input-text text-muted">Max Size 3mb</small>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="body">Body</label>
+                            <textarea name="editor1" class="form-control"></textarea>
+                        </div>
+                        
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CATEGORY MODAL -->
+    <div class="modal fade" id="add-category-modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">Add Category</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" name="title" id="title" class="form-control">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- USER MODAL -->
+    <div class="modal fade" id="add-user-modal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title">Add User</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" id="name" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" id="password" class="form-control">
+                        </div> 
+                        <div class="form-group">
+                            <label for="password-confirmation">Confirm Password</label>
+                            <input type="password" name="password-confirmation" id="password-confirmation" class="form-control">
+                        </div>                                                  
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- END OF MODALS -->
+
