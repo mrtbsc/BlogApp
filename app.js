@@ -2,12 +2,12 @@
 
 Resource post:
 
- GET   /                   Dashboard           index.html
- GET   /posts              view all posts      posts.html                           read ...
- POST  /posts              create a post       (accesible from posts.html)          create
- GET   /posts/:id/         show & edit form    details.html -> x.ejs ?              read ...
- POST  /posts/:id/         edits a post        (accesible from details.html)        update
- DELETE /posts/:id/        deletes a post      (accesible from details.html)        delete
+ GET    /                   Dashboard                dashboard.ejs
+ GET    /posts              view all posts           index.ejs                            read ...
+ POST   /posts              create a post            (accesible from dashboard.ejs )      create
+ GET    /posts/:id/         view show-&-edit form    show.ejs                             read ...
+ PUT    /posts/:id/         edit a post              (accesible from show.ejs)            update
+ DELETE /posts/:id/         delete a post            (accesible from show.ejs)            delete
 
 Other Resources and its relationships with posts:
 
@@ -35,7 +35,12 @@ app.engine('ejs', ejsMate)
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
 
-mongoose.connect('mongodb://localhost:27017/blogApp', { useNewUrlParser: true, useUnifiedTopology: true })
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(methodOverride('_method'));
+
+mongoose.connect('mongodb://localhost:27017/blogApp', { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
     .then(() => {
         console.log("MONGO CONNECTION OPEN!!!")
     })
@@ -43,6 +48,8 @@ mongoose.connect('mongodb://localhost:27017/blogApp', { useNewUrlParser: true, u
         console.log("OH NO MONGO CONNECTION ERROR!!!!")
         console.log(err)
     })
+
+let categories = ["Web Development", "Tech Gadgets", "Business", "Health & Wellness"];
 
 app.get('/', async (req, res) => {
     const posts = await Post.find();
@@ -52,6 +59,31 @@ app.get('/', async (req, res) => {
 app.get('/posts', async (req, res) => {
     const posts = await Post.find();
     res.render('posts/index', {posts});
+})
+
+app.get('/posts/:id', async (req, res) => {
+    const post = await Post.findById(req.params.id);
+    res.render('posts/show', { post , categories } );
+})
+
+app.post('/posts', async (req, res) => {
+    const p = new Post(req.body.post);
+    p.date = new Date();
+    await p.save();
+    res.redirect("/");
+})
+
+app.put('/posts/:id', async (req, res) => {
+    const { id } = req.params;
+    console.log(req.body);
+    const p = await Post.findByIdAndUpdate(id, req.body.post );
+    res.redirect(`/posts/${p._id}`);
+})
+
+app.delete('/posts/:id', async (req, res) => {
+    const { id } = req.params;
+    const deletedPost = await Post.findByIdAndDelete(id);
+    res.redirect('/posts');
 })
 
 app.listen(3000, () => {
