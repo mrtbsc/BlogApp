@@ -62,8 +62,9 @@ app.get('/', async (req, res) => {
     populate('category', 'name').
     populate('author', 'name');
     const categories = await Category.find({}, 'name');
+    const usersCount = await User.countDocuments();
     
-    res.render('dashboard', { posts, categories });
+    res.render('dashboard', { posts, categories, usersCount });
 })
 
 app.get('/posts', async (req, res) => {
@@ -141,9 +142,9 @@ app.get('/categories', async (req, res) => {
 
 app.get('/categories/:id', async (req, res) => {
     const category = await Category.findById(req.params.id).
-    populate({path: 'posts', populate: 'author'});
-    
+    populate({path: 'posts', populate: 'author'});   
     const posts = category.posts;
+
     res.render('categories/show', { category , posts });
 })
 
@@ -153,21 +154,27 @@ app.post('/categories', async (req, res) => {
     const category = new Category({...req.body});
     category.dateCreated = new Date();
     await category.save();
+
     res.redirect('/');
     
 })
 
 app.delete('/categories/:id', async (req, res) => {
-    const category = await Category.findByIdAndDelete(req.params.id);
-    console.dir(category);
-    await Post.deleteMany({
-        _id: {
-            $in: category.posts
-        }
-    });
+    const category = await Category.findByIdAndDelete(req.params.id).
+    populate({path: 'posts', populate: 'author'});
+    try { 
+        for (post of category.posts) {
+                await User.findByIdAndUpdate(post.author, { $pull: { posts: post.id } });
+                await Post.findByIdAndDelete(post.id);
+            }
+    } catch (e) {
+        throw e;
+    }
+    
     res.redirect('/categories');
-
 })
+
+
 
 app.put('/categories/:id', async (req, res) => {
     const { id } = req.params;

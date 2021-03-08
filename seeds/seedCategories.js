@@ -1,22 +1,24 @@
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 const Category = require('../models/categories');
-const Post = require('../models/posts');
+// const Post = require('../models/posts');
 
-mongoose.connect('mongodb://localhost:27017/blogApp', { useNewUrlParser: true, useUnifiedTopology: true})
-    .then(() => {
-        console.log("MONGO CONNECTION OPEN!!!")
-    })
-    .catch(err => {
-        console.log("OH NO MONGO CONNECTION ERROR!!!!")
-        console.log(err)
-    })
-
-
-const randNumberUpTo = (max) => Math.floor(Math.random() * (max));
+// mongoose.connect('mongodb://localhost:27017/blogApp', { useNewUrlParser: true, useUnifiedTopology: true})
+//     .then(() => {
+//         console.log("MONGO CONNECTION OPEN!!!")
+//     })
+//     .catch(err => {
+//         console.log("OH NO MONGO CONNECTION ERROR!!!!")
+//         console.log(err)
+//     })
 
 
-async function seedCategories() {
+// const randNumberUpTo = (max) => Math.floor(Math.random() * (max));
 
+
+module.exports = async function () {
+
+    const randNumberUpTo = (max) => Math.floor(Math.random() * (max));
+    
     await Category.deleteMany({});
     console.log("Category reset done before seeding");
 
@@ -38,9 +40,9 @@ async function seedCategories() {
 
 }
 
-seedCategories().then(() => {
-    mongoose.connection.close();
-})
+// seedCategories().then(() => {
+//     mongoose.connection.close();
+// })
 
 
 

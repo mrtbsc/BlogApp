@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const Category = require('../models/categories');
 const User = require('../models/users');
 const Post = require('../models/posts');
+const seedCategories = require('./seedCategories');
+const seedUsers = require('./seedUsers');
 
 mongoose.connect('mongodb://localhost:27017/blogApp', { useNewUrlParser: true, useUnifiedTopology: true})
     .then(() => {
@@ -14,6 +16,8 @@ mongoose.connect('mongodb://localhost:27017/blogApp', { useNewUrlParser: true, u
 
 
 const randNumberUpTo = (max) => Math.floor(Math.random() * (max));
+
+
 
 const amountOfCategories = 4;
 const getRandomCategory = async () => {
@@ -39,10 +43,6 @@ const getRandomUser = async () => {
     }
 }
 
-// getRandomCategory()
-//     .then(data => {console.log('done', data)})
-//     .catch( e => { console.log(e)})
-
 Post.deleteMany({}).then( function() {
     console.log("Post reset done before seeding");
 });
@@ -51,6 +51,9 @@ Post.deleteMany({}).then( function() {
 async function seedPosts () {
 
     try {
+
+        await seedCategories();
+        await seedUsers();
         for(let i=1; i<7; i++) {
     
             p = new Post({
@@ -74,7 +77,7 @@ async function seedPosts () {
     }
 };
 
-seedPosts().then(() => {
+seedPosts().then( () => {
     mongoose.connection.close();
 })
 

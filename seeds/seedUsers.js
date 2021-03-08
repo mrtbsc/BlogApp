@@ -1,21 +1,21 @@
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 const User = require('../models/users');
-const Post = require('../models/posts');
+// const Post = require('../models/posts');
 
-mongoose.connect('mongodb://localhost:27017/blogApp', { useNewUrlParser: true, useUnifiedTopology: true})
-    .then(() => {
-        console.log("MONGO CONNECTION OPEN!!!")
-    })
-    .catch(err => {
-        console.log("OH NO MONGO CONNECTION ERROR!!!!")
-        console.log(err)
-    })
-
-
-const randNumberUpTo = (max) => Math.floor(Math.random() * (max));
+// mongoose.connect('mongodb://localhost:27017/blogApp', { useNewUrlParser: true, useUnifiedTopology: true})
+//     .then(() => {
+//         console.log("MONGO CONNECTION OPEN!!!")
+//     })
+//     .catch(err => {
+//         console.log("OH NO MONGO CONNECTION ERROR!!!!")
+//         console.log(err)
+//     })
 
 
-async function seedUsers() {
+// const randNumberUpTo = (max) => Math.floor(Math.random() * (max));
+
+
+module.exports = async function () {
 
     await User.deleteMany({});
     console.log("Users reset done before seeding");
@@ -36,9 +36,9 @@ async function seedUsers() {
     
 }
 
-seedUsers().then(() => {
-    mongoose.connection.close();
-})
+// seedUsers().then(() => {
+//     mongoose.connection.close();
+// })
 
 
 

@@ -15,8 +15,8 @@
         <tr>
             <td><%= i + 1 %></td>
             <td><%= post.title %> </td>
-            <td class="category-column"><%= post.category.name %> </td>
-            <td class="user-column"><%= post.author.name %> </td>
+            <td class="category-column"><%= post.category? post.category.name : ""  %> </td>
+            <td class="user-column"><%= post.author? post.author.name : "" %> </td>
             <td><%= post.date.toLocaleDateString() %> </td>
             <td><a href="/posts/<%= post._id %> " class="btn btn-secondary">
                 <i class="fas fa-angle-double-right"></i>
