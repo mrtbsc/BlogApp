@@ -1,0 +1,67 @@
+<% layout('layouts/boilerplate')%>
+
+<!-- HEADER -->
+
+<header id="header" class="bg-success text-white">
+    <div class="container py-2 ">
+        <h1>
+            <i class="fas fa-folder"></i>
+            Categories
+        </h1>
+    </div>
+</header>
+
+<!-- SEARCHER -->
+
+<section id="searcher" class="py-4">
+    <div class="container">
+        <div class="col-sm-6 offset-sm-6">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Search Categories...">
+                <div class="input-group-append">
+                    <button class="btn btn-success" type="button">Search</button>
+                </div>
+            </div>
+        </div>
+    </div>    
+</section>
+
+<!-- CATEGORIES TABLE -->
+
+<section id="posts-table">
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h4>Latest Categories</h4>
+            </div>
+            <table class="table table-striped mb-0">
+                <thead class="thead-dark">
+                    <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% categories.forEach( (category, index) => { %>
+                    <tr>
+                    <td><%= (index + 1) %> </td>
+                    <td><%= category.name %> </td>
+                    <td><%= category.dateCreated.toLocaleDateString() %> </td>
+                    <td><a href="/categories/<%= category._id %> " class="btn btn-secondary">
+                        <i class="fas fa-angle-double-right"></i>
+                        Details
+                    </a></td>
+                    </tr>
+                    <% }) %> 
+                </tbody>
+            </table>
+        </div>
+    </div>       
+</section>
+
+
+
+
+

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Category = require('./models/categories');
 const Post = require('./models/posts');
 
 mongoose.connect('mongodb://localhost:27017/blogApp', { useNewUrlParser: true, useUnifiedTopology: true})
@@ -10,20 +11,38 @@ mongoose.connect('mongodb://localhost:27017/blogApp', { useNewUrlParser: true, u
         console.log(err)
     })
 
-    Post.deleteMany({}).then( function() {
-        console.log("Reset done before seeding");
-    });
 
-    const randNumberUpTo = (max) => Math.floor(Math.random() * (max + 1));
-    const categories = ["Web Development", "Tech Gadgets", "Business", "Health & Wellness"];
-    let p;
+const randNumberUpTo = (max) => Math.floor(Math.random() * (max));
+
+const amountOfCategories = 4;
+const getRandomCategory = async () => {
+    try {
+        const rand = randNumberUpTo(amountOfCategories);
+        console.log(randNumberUpTo);
+        const category = await Category.findOne().skip(rand);
+        return category;
+    } catch (e) {
+        throw e;
+    }
+}
+
+getRandomCategory()
+    .then(data => {console.log('done', data)})
+    .catch( e => { console.log(e)})
+
+Post.deleteMany({}).then( function() {
+    console.log("Post reset done before seeding");
+});
+
+
+async function seedPosts () {
 
     try {
         for(let i=1; i<7; i++) {
     
             p = new Post({
                 title: "Post " + i,
-                category: categories[randNumberUpTo(3)],
+                category: await getRandomCategory(),
                 date: new Date( 2020, randNumberUpTo(11) + 1, randNumberUpTo(27) + 1 ),
                 image: "",
                 body: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia nihil laboriosam a. Culpa quia sapiente pariatur, architecto officia praesentium saepe libero ipsa dolore ullam corporis ipsam esse, laborum possimus quos."
@@ -31,12 +50,19 @@ mongoose.connect('mongodb://localhost:27017/blogApp', { useNewUrlParser: true, u
 
             console.log(p);
 
-            p.save()
-                .then(p => console.log(p));
+            await p.save();
+
+            await Category.findByIdAndUpdate(p.category, { $push: { posts: p._id } });
         }
     } catch (e) {
         console.log(e)
     }
+};
+
+seedPosts().then(() => {
+    mongoose.connection.close();
+})
+
 
 
 

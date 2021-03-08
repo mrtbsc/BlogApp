@@ -3,7 +3,7 @@
 <!-- HEADER -->
 <header id="header" class="bg-primary text-white">
     <div class="container py-2 ">
-        <h1>Post One</h1>
+        <h1><%= post.title %></h1>
     </div>
 </header>
 
@@ -30,7 +30,7 @@
                     <form action="/posts/<%=post._id%>?_method=DELETE" method="POST">
                         <button type="submit" formmethod="POST" class="btn btn-block btn-danger">
                             <i class="fas fa-trash"></i>
-                            Delete Changes
+                            Delete Post
                         </button>
                     </form>
                 </div>
@@ -56,8 +56,8 @@
                             <label for="category">Category</label>
                             <select id="category" class="form-control" name="post[category]">
                                 <% for (let category of categories) { %>
-                                <option value=" <%= category %> " <%= category === post.category ? "selected" : "" %> >
-                                    <%= category %>
+                                <option value=<%=category.id%> <%= category.id === post.category.id ? "selected" : "" %> >
+                                    <%= category.name %>
                                 </option>
                                 <% } %> 
                             </select>   

@@ -5,8 +5,8 @@ const postSchema = new Schema({
     
     title: String,
     category: {
-        type: String,
-        enum: ["Web Development", "Tech Gadgets", "Business", "Health & Wellness"]
+        type: Schema.Types.ObjectId,
+        ref: 'Category'
     },
     date: Date,
     image: String,

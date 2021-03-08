@@ -1,0 +1,94 @@
+<% layout('layouts/boilerplate')%>
+
+<!-- HEADER -->
+
+<header id="header" class="bg-success text-white">
+    <div class="container py-2 ">
+        <h1>
+            <i class="fas fa-folder"></i>
+            Categories / <small><%= category.name %> </small>
+        </h1>
+
+        <div class="lead">
+    
+        </div>
+    </div>
+</header>
+
+
+<!-- BUTTONS -->
+
+    <section id="buttons" class="bg-light p-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <a href="/categories" class="btn btn-block btn-light">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to all Categories
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" formmethod="POST" class="btn btn-block btn-success" data-toggle="modal" data-target="#add-category-modal">
+                        Rename Category
+                    </button>
+                </div>
+                
+                <div class="col-md-4">
+                    <form action="/categories/<%=category._id%>?_method=DELETE" method="POST">
+                        <button type="submit" formmethod="POST" class="btn btn-block btn-danger">
+                            <i class="fas fa-trash"></i>
+                            Delete Category
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- POSTS TABLE -->
+
+<section id="posts-table">
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h4>Specific posts</h4>
+                <div class="lead">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut sint provident in alias. Totam, architecto. 
+                    </div>                
+            </div>
+            <%- include('../partials/posts-table')%> 
+        </div>
+    </div>
+        
+    <script>
+        $('.category-column').hide();
+    </script>
+
+</section>
+
+
+<!-- CATEGORY MODAL -->
+<div class="modal fade" id="add-category-modal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title">Rename Category</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <form action="/categories/<%= category._id %>?_method=PUT" method="POST">
+                <div class="modal-body">    
+                    <div class="form-group">
+                        <label for="category-name">Name</label>
+                        <input type="text" name="name" id="category-name" class="form-control">
+                    </div>  
+                </div>
+
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-success" value="Save">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
