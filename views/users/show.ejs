@@ -1,0 +1,79 @@
+<% layout('layouts/boilerplate')%>
+
+<!-- HEADER -->
+
+<header id="header" class="bg-warning text-white">
+    <div class="container py-2 ">
+        <h1>
+            <i class="fas fa-users"></i>
+             Users / <small><%= user.name %> </small>
+        </h1>
+    </div>
+</header>
+
+<!-- BUTTONS -->
+
+    <section id="buttons" class="bg-light p-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <a href="/users" class="btn btn-block btn-light">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to all Users
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" formmethod="POST" class="btn btn-block btn-warning text-white" data-toggle="modal" data-target="#edit-user-modal">
+                        <i class="fas fa-wrench"></i>
+                        Edit User
+                    </button>
+                </div>
+                
+                <div class="col-md-4">
+                    <form action="/users/<%=user._id%>?_method=DELETE" method="POST">
+                        <button type="submit" formmethod="POST" class="btn btn-block btn-danger">
+                            <i class="fas fa-trash"></i>
+                            Delete User
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+<!-- MAIN -->
+<section id="main" class="pt-4">
+    <div class="container">
+        <div class="row">
+            
+            <!-- POSTS TABLE -->
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Latest Posts</h4>
+                    </div>
+                    <%- include('../partials/posts-table')%>    
+                </div>
+   
+            </div>
+
+            <!-- PROFILE -->
+            <div class="col-md-3">
+                <img class='img-fluid rounded' src="../../img/avatar.png" >
+                <div class="card text-center my-3">
+                    <div class="card-body">
+                        <%= user.bio %> 
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        $('.user-column').hide();
+    </script>
+</section>
+

@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const categorySchema = new Schema({
+const userSchema = new Schema({
     
     name: String,
-    dateCreated: Date,
-    description: String,
+    email: String,
+    bio: String,
+    avatar: String,
     posts: [ 
         {
             type: Schema.Types.ObjectId,
@@ -15,5 +16,5 @@ const categorySchema = new Schema({
 
 })
 
-const Category = mongoose.model('Category', categorySchema);
-module.exports = Category;
+const User = mongoose.model('User', userSchema);
+module.exports = User;

@@ -4,6 +4,7 @@
         <th>#</th>
         <th>Title</th>
         <th class="category-column">Category</th>
+        <th class="user-column">Author</th>
         <th>Date</th>
         <th></th>
         </tr>
@@ -15,6 +16,7 @@
             <td><%= i + 1 %></td>
             <td><%= post.title %> </td>
             <td class="category-column"><%= post.category.name %> </td>
+            <td class="user-column"><%= post.author.name %> </td>
             <td><%= post.date.toLocaleDateString() %> </td>
             <td><a href="/posts/<%= post._id %> " class="btn btn-secondary">
                 <i class="fas fa-angle-double-right"></i>

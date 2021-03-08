@@ -31,7 +31,9 @@ const { get } = require('http');
 
 const Post = require('./models/posts');
 const Category = require('./models/categories');
-const { findByIdAndUpdate } = require('./models/posts');
+const User = require('./models/users');
+
+const { findByIdAndUpdate } = require('./models/posts'); // ¿?¿?
 
 app.engine('ejs', ejsMate)
 app.set('view engine', 'ejs');
@@ -56,20 +58,28 @@ let categories = ["Web Development", "Tech Gadgets", "Business", "Health & Welln
 // READ ROUTES for POST RESOURCE
 
 app.get('/', async (req, res) => {
-    const posts = await Post.find().populate('category', 'name');
-    console.log(posts);
+    const posts = await Post.find().
+    populate('category', 'name').
+    populate('author', 'name');
     const categories = await Category.find({}, 'name');
-    res.render('dashboard', { posts, categories});
+    
+    res.render('dashboard', { posts, categories });
 })
 
 app.get('/posts', async (req, res) => {
-    const posts = await Post.find().populate('category', 'name');
-    res.render('posts/index', {posts});
+    const posts = await Post.find().
+    populate('category', 'name').
+    populate('author', 'name');
+
+    res.render('posts/index', { posts });
 })
 
 app.get('/posts/:id', async (req, res) => {
-    const post = await Post.findById(req.params.id).populate('category');
+    const post = await Post.findById(req.params.id).
+    populate('category').
+    populate('author', 'name');
     const categories = await Category.find({}, 'name');
+
     res.render('posts/show', { post, categories } );
 })
 
@@ -79,10 +89,15 @@ app.post('/posts', async (req, res) => {
     const p = new Post(req.body.post);
     p.date = new Date();
     await p.save();
+
     const category = await Category.findById(p.category._id);
-    console.log(category, p.category._id);
     category.posts.push(p);
     category.save();
+
+    const author = await Author.findById(p.author._id);
+    author.posts.push(p);
+    author.save();
+
     res.redirect("/");
 })
 
@@ -97,6 +112,7 @@ app.put('/posts/:id', async (req, res) => {
             await Category.findByIdAndUpdate(oldCategoryId, { $pull: { posts: id } });
             await Category.findByIdAndUpdate(newCategoryId, { $push: { posts: id } });            
         }
+        
         res.redirect(`/posts/${id}`);
     } catch (e) {
         throw e;
@@ -107,9 +123,12 @@ app.put('/posts/:id', async (req, res) => {
 
 app.delete('/posts/:id', async (req, res) => {
     const { id } = req.params;
-    const deletedPost = await Post.findByIdAndDelete(id).populate('category');
-    const affectedCategory = deletedPost.category;
-    affectedCategory.posts.pop(deletedPost);
+    const { category , author } = await Post.findByIdAndDelete(id).
+        populate('category').
+        populate('author');
+    await Category.findByIdAndUpdate(category, { $pull: { posts: id } });
+    await User.findByIdAndUpdate(author, { $pull: { posts: id } });
+    
     res.redirect('/');
 })
 
@@ -121,9 +140,10 @@ app.get('/categories', async (req, res) => {
 })
 
 app.get('/categories/:id', async (req, res) => {
-    const category = await Category.findById(req.params.id).populate('posts');
+    const category = await Category.findById(req.params.id).
+    populate({path: 'posts', populate: 'author'});
+    
     const posts = category.posts;
-    console.log(posts);
     res.render('categories/show', { category , posts });
 })
 
@@ -153,6 +173,23 @@ app.put('/categories/:id', async (req, res) => {
     const { id } = req.params;
     await Category.findByIdAndUpdate(id, { ...req.body });
     res.redirect(`/categories/${id}`); 
+})
+
+// READ ROUTES for USER RESOURCE
+app.get('/users', async (req, res) => {
+    const users = await User.find();
+    console.log(users);
+    res.render('users/index', { users });
+})
+
+app.get('/users/:id', async (req, res) => {
+    console.log(req.params.id);
+    const user = await User.findById(req.params.id).
+    populate({path: 'posts', populate: 'category'});
+    
+    
+    const posts = user.posts;
+    res.render('users/show', { user , posts });
 })
 
 //

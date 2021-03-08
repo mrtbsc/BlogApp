@@ -8,6 +8,10 @@ const postSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Category'
     },
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     date: Date,
     image: String,
     body: String

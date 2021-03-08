@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const Category = require('./models/categories');
-const Post = require('./models/posts');
+const Category = require('../models/categories');
+const Post = require('../models/posts');
 
 mongoose.connect('mongodb://localhost:27017/blogApp', { useNewUrlParser: true, useUnifiedTopology: true})
     .then(() => {
