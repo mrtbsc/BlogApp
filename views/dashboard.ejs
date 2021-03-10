@@ -1,5 +1,10 @@
 <% layout('layouts/boilerplate')%>
 
+<!-- NAVBAR -->
+<script>
+    $('#dashboard-nav').addClass('active');
+</script>
+
 <!-- HEADER -->
 
 <header id="header" class="bg-primary text-white">
@@ -123,7 +128,7 @@
                         </div>
                         <div class="form-group">
                             <label for="author">Author</label>
-                            <input type="text" name="post[author]" id="author" class="form-control" value="Paula Roman" disabled>
+                            <input type="text" name="post[author]" id="author" class="form-control" value="Paula Colomé" disabled>
                         </div>
                         <div class="form-group">
                             <label for="post-image">Upload Image</label>
@@ -187,8 +192,9 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                 </div>
-                <div class="modal-body">
-                    <form>
+                <form action="/users" method="POST">
+                    <div class="modal-body">
+                        
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" name="name" id="name" class="form-control">
@@ -205,11 +211,12 @@
                             <label for="password-confirmation">Confirm Password</label>
                             <input type="password" name="password-confirmation" id="password-confirmation" class="form-control">
                         </div>                                                  
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-warning" data-dismiss="modal">Save changes</button>
-                </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-warning" value="Create User">
+                    </div>
+                </form>
             </div>
         </div>
     </div>

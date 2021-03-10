@@ -8,20 +8,20 @@
     
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item mr-3 active">
+                <li class="nav-item mr-3" id="dashboard-nav">
                     <a class="nav-link" href="/">Dashboard <span class="sr-only">(current)</span></a>
                 </li>
 
-                <li class="nav-item mr-3">
-                    <a class="nav-link" href="/posts">Posts</a>
+                <li class="nav-item mr-3" id="all-posts-nav">
+                    <a class="nav-link" href="/posts">All Posts</a>
                 </li>
 
-                <li class="nav-item mr-3">
-                    <a class="nav-link" href="/categories" tabindex="-1" aria-disabled="true">Categories</a>
+                <li class="nav-item mr-3" id="by-category-nav">
+                    <a class="nav-link" href="/categories" tabindex="-1" aria-disabled="true">Explore by Category</a>
                 </li>
                 
-                <li class="nav-item mr-3">
-                    <a class="nav-link" href="/users" tabindex="-1" aria-disabled="true">Users</a>
+                <li class="nav-item mr-3" id="by-user-nav">
+                    <a class="nav-link" href="/users" tabindex="-1" aria-disabled="true">Explore by User</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
@@ -31,7 +31,7 @@
                         Welcome Paula
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="profile.html">
+                    <a class="dropdown-item" href="/users/profile">
                         <i class="fas fa-user-circle"></i>
                         Profile
                     </a>

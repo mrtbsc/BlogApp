@@ -89,13 +89,14 @@ app.get('/posts/:id', async (req, res) => {
 app.post('/posts', async (req, res) => {
     const p = new Post(req.body.post);
     p.date = new Date();
+    const author = await User.findOne( { name: "Paula Colomé"} );
+    p.author = author;
     await p.save();
 
     const category = await Category.findById(p.category._id);
     category.posts.push(p);
     category.save();
 
-    const author = await Author.findById(p.author._id);
     author.posts.push(p);
     author.save();
 
@@ -150,7 +151,6 @@ app.get('/categories/:id', async (req, res) => {
 
 //  WRITE ROUTES for CATEGORIES RESOURCE
 app.post('/categories', async (req, res) => {
-    console.dir(req.body.name);
     const category = new Category({...req.body});
     category.dateCreated = new Date();
     await category.save();
@@ -185,19 +185,62 @@ app.put('/categories/:id', async (req, res) => {
 // READ ROUTES for USER RESOURCE
 app.get('/users', async (req, res) => {
     const users = await User.find();
-    console.log(users);
     res.render('users/index', { users });
 })
 
+app.get('/users/profile', async (req, res) => {
+    const user = await User.findOne( { name: "Paula Colomé"} );
+    let isOwnProfile = true;
+    res.render('users/edit', { user , isOwnProfile });
+})
+
+app.get('/users/:id/edit', async (req, res) => {
+    const user = await User.findById( req.params.id );
+    let isOwnProfile = false;
+    res.render('users/edit', { user , isOwnProfile });
+})
+
 app.get('/users/:id', async (req, res) => {
-    console.log(req.params.id);
     const user = await User.findById(req.params.id).
     populate({path: 'posts', populate: 'category'});
-    
-    
+        
     const posts = user.posts;
     res.render('users/show', { user , posts });
 })
+
+// WRITE ROUTES for USER RESOURCE
+ 
+app.post('/users', async (req, res) => {
+    const user = new User({...req.body});
+    await user.save();
+
+    res.redirect('/users');
+})
+
+app.delete('/users/:id', async (req, res) => {
+    const user = await User.findByIdAndDelete(req.params.id).
+    populate({path: 'posts', populate: 'category'});
+    try { 
+        for (post of user.posts) {
+                await Category.findByIdAndUpdate(post.category, { $pull: { posts: post.id } });
+                await Post.findByIdAndDelete(post.id);
+            }
+    } catch (e) {
+        throw e;
+    }
+    
+    res.redirect('/users');
+})
+
+app.put('/users/:id', async (req, res) => {
+    const { id } = req.params;
+    const newInfo = req.body.user;
+    const user = await User.findByIdAndUpdate(id, newInfo);
+
+    res.redirect(`/users/${id}/edit`); 
+})
+
+
 
 //
 app.listen(3000, () => {

@@ -28,7 +28,7 @@
                 
                 <div class="col-md-3">
                     <form action="/posts/<%=post._id%>?_method=DELETE" method="POST">
-                        <button type="submit" formmethod="POST" class="btn btn-block btn-danger">
+                        <button type="submit" formmethod="POST" class="btn btn-block btn-danger" >
                             <i class="fas fa-trash"></i>
                             Delete Post
                         </button>
@@ -64,8 +64,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="title">Author</label>
-                            <input type="text" name="post[title]" id="title" class="form-control" disabled
+                            <label for="author">Author</label>
+                            <input type="text" name="post[author]" id="author" class="form-control" disabled
                                 value= "<%= post.author.name %>"/>
                         </div>
 

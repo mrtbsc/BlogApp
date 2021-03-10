@@ -1,5 +1,10 @@
 <% layout('layouts/boilerplate')%>
 
+<!-- NAVBAR -->
+<script>
+    $('#by-user-nav').addClass('active');
+</script>
+
 <!-- HEADER -->
 
 <header id="header" class="bg-warning text-white">
@@ -23,15 +28,15 @@
                     </a>
                 </div>
                 <div class="col-md-4">
-                    <button type="submit" formmethod="POST" class="btn btn-block btn-warning text-white" data-toggle="modal" data-target="#edit-user-modal">
+                    <a href="/users/<%= user._id %>/edit" class="btn btn-block btn-warning text-white">
                         <i class="fas fa-wrench"></i>
                         Edit User
-                    </button>
+                    </a>
                 </div>
                 
                 <div class="col-md-4">
                     <form action="/users/<%=user._id%>?_method=DELETE" method="POST">
-                        <button type="submit" formmethod="POST" class="btn btn-block btn-danger">
+                        <button type="submit" formmethod="POST" class="btn btn-block btn-danger" <%= (user.name == "Paula Colomé")? 'disabled' : ''%> >
                             <i class="fas fa-trash"></i>
                             Delete User
                         </button>
@@ -63,7 +68,7 @@
                 <img class='img-fluid rounded' src="../../img/avatar.png" >
                 <div class="card text-center my-3">
                     <div class="card-body">
-                        <%= user.bio %> 
+                        <%- user.bio %>    
                     </div>
                 </div>
 
@@ -74,6 +79,8 @@
 
     <script>
         $('.user-column').hide();
-    </script>
+    </script>     
+
 </section>
+
 
