@@ -5,6 +5,8 @@ const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const { get } = require('http');
 
+const catchAsync = require('./utils/catchAsync');
+const AppError = require('./utils/AppError');
 const Post = require('./models/posts');
 const Category = require('./models/categories');
 const User = require('./models/users');
@@ -40,7 +42,7 @@ app.use('/posts', postsRoutes);
 app.use('/categories', catRoutes);
 app.use('/users', usersRoutes)
 
-app.get('/', async (req, res) => {
+app.get('/', catchAsync( async (req, res) => {
     const posts = await Post.find().
     populate('category', 'name').
     populate('author', 'name');
@@ -48,8 +50,18 @@ app.get('/', async (req, res) => {
     const usersCount = await User.countDocuments();
     
     res.render('dashboard', { posts, categories, usersCount });
+}))
+
+app.all( '*', (req, res, next) => {
+    next( new AppError('Page not found', 404) );
 })
 
+/**************** ERROR HANDLER ****************/
+app.use( (err, req, res, next) => {
+    const { statusCode = 500 } = err;
+    if (!err.message) err.message = 'D: Something Went Wrong!'
+    res.status(statusCode).render('error', { err })
+})
 
 /**************** SERVER START ****************/
 app.listen(3000, () => {
