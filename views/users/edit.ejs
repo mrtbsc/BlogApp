@@ -1,12 +1,17 @@
 <% layout('layouts/boilerplate')%>
 
+<!-- NAVBAR -->
+<script>
+    if (<%= isOwnProfile %>) { $('#profile-nav').addClass('active')}
+</script>
+
 <!-- HEADER -->
 
 <header id="header" class="bg-warning text-white">
     <div class="container py-2 ">
         <h1>
             <i class="fas fa-user"></i>
-            Edit <%= isOwnProfile? "your Profile" : user.name %>
+            Edit <%= isOwnProfile ? "your Profile" : user.username %>
         </h1>
     </div>
 </header>
@@ -19,7 +24,7 @@
             <div class="col-md-3">
                 <a href=<%= isOwnProfile ? "/" : `/users/${user.id}` %> class="btn btn-block btn-light">
                     <i class="fas fa-arrow-left"></i>
-                    <%= isOwnProfile ? "Back to Dashboard" : `Back to ${user.name}'s posts` %>
+                    <%= isOwnProfile ? "Back to Dashboard" : `Back to ${user.username}'s posts` %>
                 </a>
             </div>
             <div class="col-md-3">
@@ -31,7 +36,7 @@
             </div>
             <div class="col-md-3">
                 <form action="/users/<%=user._id%>?_method=DELETE" method="POST">
-                    <button type="submit" formmethod="POST" class="btn btn-block btn-danger" <%= (user.name == "Paula Colomé")? 'disabled' : ''%> >
+                    <button type="submit" formmethod="POST" class="btn btn-block btn-danger" <%= isOwnProfile ? 'disabled' : ''%> >
                         <i class="fas fa-trash"></i>
                         Delete <%= isOwnProfile ? 'Account' : 'User' %>
                     </button>
@@ -54,8 +59,8 @@
                     <div class="card-body">
                         <form id='user-form' action="/users/<%=user._id%>/?_method=PUT" method="POST">
                             <div class="form-group">
-                                <label for="name">Name</label>
-                                <input type="text" name="user[name]" id="name" class="form-control" value="<%= user.name %>">
+                                <label for="username">Name</label>
+                                <input type="text" name="user[username]" id="username" class="form-control" value="<%= user.username %>">
                             </div>
 
                             <div class="form-group">

@@ -17,14 +17,24 @@ module.exports.categoryJoiSchema = Joi.object({
     }).required()
 });
 
-module.exports.userJoiSchema = Joi.object({
+module.exports.newUserJoiSchema = Joi.object({
     user: Joi.object({
-        name: Joi.string().required(),
-        email: Joi.string().email(),
+        username: Joi.any().required(),
+        email: Joi.string().required().email(),
         bio: Joi.string(),
         avatar: Joi.string(),
         posts: Joi.array(),
-        password: Joi.any(),
-        passwordConfirmation: Joi.any()
+        password: Joi.any().required(),
+        passwordConfirmation: Joi.any().required().valid(Joi.ref('password')).messages({'any.only': "The passwords don't match"})
+    }).required()
+});
+
+module.exports.editedUserJoiSchema = Joi.object({
+    user: Joi.object({
+        username: Joi.string().required(),
+        email: Joi.string().required().email(),
+        bio: Joi.string().allow(''),
+        avatar: Joi.string(),
+        posts: Joi.array(),
     }).required()
 });

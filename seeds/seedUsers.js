@@ -23,7 +23,7 @@ module.exports = async function () {
     const users = ["Helena Thomson", "Fran Martinez", "Mike Smith", "Paula Colomé"];
     await Promise.all(users.map( async (user) => {
         let u = new User({
-            name: user, 
+            username: user, 
             email: `${user.substr(4)}@gmail.com`,
             bio: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tenetur veniam cum possimus iure eius nemo? Beatae quidem rem impedit voluptate iure illo fuga corrupti aspernatur, incidunt sint, exercitationem voluptates est fugit praesentium vitae mollitia ut esse eligendi iusto minima minus.',
             avatar: '',

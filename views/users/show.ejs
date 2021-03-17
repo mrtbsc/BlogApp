@@ -11,7 +11,7 @@
     <div class="container py-2 ">
         <h1>
             <i class="fas fa-users"></i>
-             Users / <small><%= user.name %> </small>
+             Users / <small><%= user.username %> </small>
         </h1>
     </div>
 </header>
@@ -36,7 +36,7 @@
                 
                 <div class="col-md-4">
                     <form action="/users/<%=user._id%>?_method=DELETE" method="POST">
-                        <button type="submit" formmethod="POST" class="btn btn-block btn-danger" <%= (user.name == "Paula Colomé")? 'disabled' : ''%> >
+                        <button type="submit" formmethod="POST" class="btn btn-block btn-danger" <%= (user.username == "Paula Colomé")? 'disabled' : ''%> >
                             <i class="fas fa-trash"></i>
                             Delete User
                         </button>

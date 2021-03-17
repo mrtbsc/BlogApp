@@ -25,10 +25,11 @@
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item mr-3 dropdown">
+                <% if(currentUser) {%>
+                <li class="nav-item mr-3 dropdown" id="profile-nav">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-user"></i>
-                        Welcome Paula
+                        <%= currentUser.username %> 
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/users/profile">
@@ -42,11 +43,25 @@
                     </div>
                 </li>
                 <li class="nav-item mr-3 pb-sm-1">
-                    <a class="nav-link" href="login.html">
+                    <a class="nav-link" href="/users/logout">
                         <i class="fas fa-user-times"></i>
                         Logout
                     </a>
                 </li>
+                <% } else {%>
+                <li class="nav-item mr-3 pb-sm-1" id="login-nav">
+                    <a class="nav-link" href="/users/login">
+                        <i class="fas fa-key"></i>
+                        Login
+                    </a>
+                </li>
+                <li class="nav-item mr-3 pb-sm-1" id="register-nav">
+                    <a class="nav-link" href="/users/register">
+                        <i class="fas fa-user-plus"></i>
+                        Register
+                    </a>
+                </li>
+                <% } %> 
             </ul>
             
         </div>
