@@ -1,0 +1,105 @@
+<% layout('layouts/boilerplate')%>
+
+<!-- HEADER -->
+<header id="header" class="bg-primary text-white">
+    <div class="container py-2 ">
+        <h1>Edit Post</h1>
+    </div>
+</header>
+
+<!-- BUTTONS -->
+
+    <section id="buttons" class="bg-light p-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <a href="/" class="btn btn-block btn-light">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Dashboard
+                    </a>
+                </div>
+
+                <% if (currentUser && post.author.equals(currentUser._id) || isAdmin ) { %> 
+                <div class="col-md-3">
+                    <button id="form-button" type="submit" formmethod="POST" class="btn btn-block btn-success"
+                        onclick="!this.form && document.getElementById('post-form').submit()">
+                        <i class="fas fa-check"></i>
+                        Save Changes
+                    </button>
+                </div>
+
+                <div class="col-md-3">
+                    <form action="/posts/<%=post._id%>?_method=DELETE" method="POST">
+                        <button type="submit" formmethod="POST" class="btn btn-block btn-danger" >
+                            <i class="fas fa-trash"></i>
+                            Delete Post
+                        </button>
+                    </form>
+                </div>
+                <% } %> 
+            </div>
+        </div>
+    </section>
+
+    <!-- POST EDITION -->
+    <form id="post-form" action="/posts/<%=post._id%>/?_method=PUT" method="POST" novalidate class="needs-validation">
+        <section id="post-edition" class="mt-3">
+            <div class="container">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" name="post[title]" id="title" class="form-control" 
+                                value= "<%= post.title %>" required />
+                            <div class="invalid-feedback">Please choose a name</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <select id="category" class="form-control" name="post[category]" >
+                                <% for (let category of categories) { %>
+                                <option value=<%=category.id%> <%= category.id === post.category.id ? "selected" : "" %> >
+                                    <%= category.name %>
+                                </option>
+                                <% } %> 
+                            </select>   
+                        </div>
+
+                        <div class="form-group">
+                            <label for="author">Author</label>
+                            <input type="text" name="post[author]" id="author" class="form-control" disabled
+                                value= "<%= post.author.username %>"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="post-image">Upload Image</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="post-image" name="post[image]" value="<%= post.image %>" />
+                                <label class="custom-file-label" for="post-image">Choose file</label>
+                            </div>
+                            <small class="input-text text-muted">Max Size 3mb</small>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="body">Body</label>
+                            <textarea name="post[body]" class="form-control" required >
+                                <%= post.body %> 
+                            </textarea>
+                            <div class="invalid-feedback">Cannot be blank</div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+        <input type="submit" value="">
+    
+    </form>
+
+<!-- TEXT-EDITOR SETUP -->
+    <script src="//cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('post[body]');
+    </script>
+
+<!-- FORM VALIDATION -->
+    <%- include('../partials/form-validation')%>

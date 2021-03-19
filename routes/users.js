@@ -1,40 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const mongoose = require('mongoose');
 
 const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/AppError');
-const { newUserJoiSchema, editedUserJoiSchema } = require('../joiSchemas');
-const { isLoggedIn } = require('../middleware');
+const { isLoggedIn, validateUser } = require('../middleware');
 const Post = require('../models/posts');
 const Category = require('../models/categories');
 const User = require('../models/users');
-
-const validateUser = (req, res, next) => {
-    let schema = null;
-    let redirectUrl = '';
-    if (req.method === 'PUT') {
-        schema = editedUserJoiSchema;
-        // We make the error appear in the same page it came from
-        redirectUrl = req.originalUrl.split('?',1)[0] + 'edit'; // the originalUrl ends inconviniently with ..?method=PUT       
-    }
-    if (req.method === 'POST') {
-        schema = newUserJoiSchema;
-        redirectUrl = '/';
-    }
-    const { error } = schema.validate(req.body);
-    
-    if (error) {
-        const msg = error.details.map(el => el.message).join(',')
-        req.flash('error', msg );
-
-        res.redirect(redirectUrl);
-    } else {
-        next();
-    }
-}
-
-
 
 /*** AUTHENTICATION ROUTES ***/
 
@@ -54,8 +27,8 @@ router.post('/register', catchAsync(async (req, res) => {
         })         
     } 
     catch (e) {
-		        req.flash('error', e.message);
-		        res.redirect('/users/register');
+        req.flash('error', e.message);
+        res.redirect('/users/register');
     }
 }));
 
@@ -67,18 +40,33 @@ router.post('/login', passport.authenticate('local', { failureFlash: true, failu
     req.flash('success', 'Welcome back!');
     const redirectUrl = req.session.returnTo || '/';
     delete req.session.returnTo;
+    if (req.user.username === "Admin") {
+        console.log('llega');
+        req.session.isAdmin = true;
+        console.log(res.locals);
+    }
+
     res.redirect(redirectUrl);
 })
 
 router.get('/logout', isLoggedIn, (req, res) => {
     req.logout();
     req.flash('success', "Goodbye!");
-    res.redirect('/');
+    const redirectUrl = req.session.returnTo || '/';
+    delete req.session.returnTo;
+    delete req.session.isAdmin;
+    res.redirect(redirectUrl);
 })
 
 /*** OTHER READ ROUTES ***/
 router.get('/', catchAsync( async (req, res) => {
-    const users = await User.find();
+    let query = {};
+    if (req.user) {
+        const currentUserId = req.user._id + "";
+        query = { _id : { $ne:  mongoose.Types.ObjectId(currentUserId)}};
+    } 
+    console.log(query);
+    const users = await User.find( query );
     res.render('users/index', { users });
 }))
 

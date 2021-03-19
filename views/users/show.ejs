@@ -27,6 +27,7 @@
                         Back to all Users
                     </a>
                 </div>
+                <% if (currentUser && isAdmin ) { %> 
                 <div class="col-md-4">
                     <a href="/users/<%= user._id %>/edit" class="btn btn-block btn-warning text-white">
                         <i class="fas fa-wrench"></i>
@@ -36,12 +37,13 @@
                 
                 <div class="col-md-4">
                     <form action="/users/<%=user._id%>?_method=DELETE" method="POST">
-                        <button type="submit" formmethod="POST" class="btn btn-block btn-danger" <%= (user.username == "Paula Colomé")? 'disabled' : ''%> >
+                        <button type="submit" formmethod="POST" class="btn btn-block btn-danger" <%= (user.username == currentUser)? 'disabled' : ''%> >
                             <i class="fas fa-trash"></i>
                             Delete User
                         </button>
                     </form>
                 </div>
+                <% } %> 
             </div>
         </div>
     </section>
