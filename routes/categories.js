@@ -2,21 +2,12 @@ const express = require('express');
 const router = express.Router();
 
 const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/AppError');
-const { categoryJoiSchema } = require('../joiSchemas');
+const { validateCategory } = require('../middleware');
 const Post = require('../models/posts');
 const Category = require('../models/categories');
 const User = require('../models/users');
 
-const validateCategory = (req, res, next) => {
-    const { error } = categoryJoiSchema.validate(req.body);
-    if (error) {
-        const msg = error.details.map(el => el.message).join(',')
-        throw new AppError(msg, 400)
-    } else {
-        next();
-    }
-}
+
 
 /** READ ROUTES **/
     router.get('/', catchAsync( async (req, res) => {

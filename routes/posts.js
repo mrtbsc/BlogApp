@@ -2,35 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/AppError');
-const { postJoiSchema } = require('../joiSchemas');
+const { validatePost } = require('../middleware');
 const Post = require('../models/posts');
 const Category = require('../models/categories');
 const User = require('../models/users');
-
-const validatePost = (req, res, next) => {
-    const { error } = postJoiSchema.validate(req.body);
-    
-    if (error) {
-        
-        const msg = error.details.map(el => el.message).join(',')
-        req.flash('error', msg );
-
-        let redirectUrl = ''
-        if (req.method === 'PUT') {
-            // We make the error appear in the same page it came from
-            redirectUrl = req.originalUrl.split('?',1)[0]; // the originalUrl ends inconviniently with ..?method=PUT       
-        }
-        if (req.method === 'POST') {
-            redirectUrl = '/';
-        }
-        res.redirect(redirectUrl);
-
-    } else {
-        next();
-    }
-}
-
 
 /*** READ ROUTES ***/
     router.get('/', catchAsync( async (req, res) => {
@@ -50,7 +25,23 @@ const validatePost = (req, res, next) => {
             req.flash('error', 'Cannot find that post!');
             return res.redirect('/posts');
         }
-        res.render('posts/show', { post, categories } );
+        const author = post.author;
+        const isAuthor = req.user && author.equals(req.user._id);
+        res.render('posts/show', { post, categories, isAuthor } );
+    }))
+    
+    router.get('/:id/edit', catchAsync( async (req, res) => {
+        const post = await Post.findById(req.params.id).
+        populate('category').
+        populate('author', 'username');
+        const categories = await Category.find({}, 'name');
+        if (!post) {
+            req.flash('error', 'Cannot find that post!');
+            return res.redirect('/posts');
+        }
+        const author = post.author;
+        const isAuthor = req.user && author.equals(req.user._id);
+        res.render('posts/edit', { post, categories, isAuthor } );
     }))
 /**/
 
@@ -58,7 +49,7 @@ const validatePost = (req, res, next) => {
     router.post('/', validatePost , catchAsync( async (req, res) => {
         const p = new Post(req.body.post);
         p.date = new Date();
-        const author = await User.findOne( { username: "Paula Colomé"} );
+        const author = req.user
         p.author = author;
         await p.save();
 

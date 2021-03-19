@@ -36,7 +36,7 @@
             </div>
             <div class="col-md-3">
                 <form action="/users/<%=user._id%>?_method=DELETE" method="POST">
-                    <button type="submit" formmethod="POST" class="btn btn-block btn-danger" <%= isOwnProfile ? 'disabled' : ''%> >
+                    <button type="submit" formmethod="POST" class="btn btn-block btn-danger" >
                         <i class="fas fa-trash"></i>
                         Delete <%= isOwnProfile ? 'Account' : 'User' %>
                     </button>
