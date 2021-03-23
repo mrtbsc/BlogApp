@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const mongoose = require('mongoose');
 
 const catchAsync = require('../utils/catchAsync');
 const { isLoggedIn, validateUser } = require('../middleware');
