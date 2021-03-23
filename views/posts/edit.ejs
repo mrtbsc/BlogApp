@@ -56,7 +56,7 @@
                         <div class="form-group">
                             <label for="category">Category</label>
                             <select id="category" class="form-control" name="post[category]" >
-                                <% for (let category of categories) { %>
+                                <% for (let category of allCategories) { %>
                                 <option value=<%=category.id%> <%= category.id === post.category.id ? "selected" : "" %> >
                                     <%= category.name %>
                                 </option>

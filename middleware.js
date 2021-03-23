@@ -1,4 +1,4 @@
-//const AppError = require('./utils/AppError');
+const tellIfAuthor = require('./utils/tellIfAuthor');
 const Post = require('./models/posts');
 const Category = require('./models/categories');
 const User = require('./models/users');
@@ -73,3 +73,13 @@ module.exports.validateUser = (req, res, next) => {
     }
 }
 
+module.exports.filterNonAuthors = async (req, res, next) => {
+    const { id } = req.params;
+    const post = await Post.findById(id);
+    const isAuthor = tellIfAuthor( post.author );
+    if ( !req.session.isAdmin && !isAuthor) {
+        req.flash('error', 'You do not have permission to do that!');
+        return res.redirect(`/posts/${id}`);
+    }
+    next();
+}
