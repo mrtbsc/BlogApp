@@ -113,7 +113,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                 </div>
-                <form action="/posts" method="POST" novalidate class="needs-validation"> 
+                <form action="/posts" method="POST" novalidate class="needs-validation"  enctype="multipart/form-data"> 
                     <div class="modal-body">                   
                         <div class="form-group">
                             <label for="title">Title</label>
@@ -135,10 +135,10 @@
                             <input type="text" name="post[author]" id="author" class="form-control" value="<% if(currentUser){ %> <%= currentUser.username%> <%}  %> " disabled>
                         </div>
                         <div class="form-group">
-                            <label for="post-image">Upload Image</label>
+                            <label for="post-images">Upload Image</label>
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="post-image" name="post[image]">
-                                <label class="custom-file-label" for="post-image">Choose file</label>
+                                <input type="file" class="custom-file-input" id="post-image" name="images" multiple>
+                                <label class="custom-file-label" for="post-images">Choose file</label>
                             </div>
                             <small class="input-text text-muted">Max Size 3mb</small>
                         </div>

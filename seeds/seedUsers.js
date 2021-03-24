@@ -20,7 +20,7 @@ module.exports = async function () {
     await User.deleteMany({});
     console.log("Users reset done before seeding");
 
-    const users = ["Helena Thomson", "Fran Martinez", "Mike Smith", "Paula Colomé, Admin"];
+    const users = ["Helena Thomson", "Fran Martinez", "Mike Smith", "Paula Colomé"];
     await Promise.all(users.map( async (user) => {
         let u = new User({
             username: user, 
