@@ -1,15 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const ImageSchema = new Schema({
-    url: String,
-    filename: String
-});
-
-ImageSchema.virtual('thumbnail').get(function () {
-    return this.url.replace('/upload', '/upload/w_200');
-});
-
 const postSchema = new Schema({
     
     title: String,
@@ -22,7 +13,7 @@ const postSchema = new Schema({
         ref: 'User'
     },
     date: Date,
-    images: [ImageSchema],
+    image: String,
     body: String
 
 })

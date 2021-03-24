@@ -61,16 +61,7 @@ async function seedPosts () {
                 category: await getRandomCategory(),
                 author: await getRandomUser(),
                 date: new Date( 2020, randNumberUpTo(11) + 1, randNumberUpTo(27) + 1 ),
-                images: [
-                    {
-                    url: 'https://res.cloudinary.com/dec2ratwh/image/upload/v1616510336/BlogApp/txpqwzjcoterjksvrvbh.jpg',
-                    filename: 'BlogApp/txpqwzjcoterjksvrvbh'
-                    },
-                    {
-                    url: 'https://res.cloudinary.com/dec2ratwh/image/upload/v1616510338/BlogApp/fqb48rwkndkqq7yf4qwv.jpg',
-                    filename: 'BlogApp/fqb48rwkndkqq7yf4qwv'
-                    }
-                ],
+                image: "",
                 body: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia nihil laboriosam a. Culpa quia sapiente pariatur, architecto officia praesentium saepe libero ipsa dolore ullam corporis ipsam esse, laborum possimus quos."
             });
 

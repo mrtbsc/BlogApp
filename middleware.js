@@ -8,7 +8,6 @@ const { newUserJoiSchema, editedUserJoiSchema } = require('./joiSchemas');
 
 
 module.exports.isLoggedIn = (req, res, next) => {
-    console.log('enters isLoggedIn')
     if (!req.isAuthenticated()) {
         req.flash('error', 'You must be signed in first!');
         return res.redirect('/users/login');
@@ -77,7 +76,7 @@ module.exports.validateUser = (req, res, next) => {
 module.exports.filterNonAuthors = async (req, res, next) => {
     const { id } = req.params;
     const post = await Post.findById(id);
-    const isAuthor = tellIfAuthor( post.author, req );
+    const isAuthor = tellIfAuthor( post.author );
     if ( !req.session.isAdmin && !isAuthor) {
         req.flash('error', 'You do not have permission to do that!');
         return res.redirect(`/posts/${id}`);

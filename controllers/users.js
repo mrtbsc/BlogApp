@@ -20,10 +20,7 @@ module.exports.registerUser = async (req, res) => {
             if (err) return next(err);
             req.flash('success', 'Welcome to the Blog!');
             res.redirect('/');
-        })
-        // if (req.user.username === "Admin") {
-        //     req.session.isAdmin = true;
-        // }         
+        })         
     } 
     catch (e) {
         req.flash('error', e.message);
@@ -40,7 +37,9 @@ module.exports.loginUser = (req, res) => {
     const redirectUrl = req.session.returnTo || '/';
     delete req.session.returnTo;
     if (req.user.username === "Admin") {
+        console.log('llega');
         req.session.isAdmin = true;
+        console.log(res.locals);
     }
 
     res.redirect(redirectUrl);
@@ -70,9 +69,7 @@ module.exports.displayIndex = async (req, res) => {
 
 module.exports.displayCurrentUser = async (req, res) => {
     const user = req.user;
-    console.log(req.user);
     let isOwnProfile = true;
-    console.log(isOwnProfile);
     res.render('users/edit', { user , isOwnProfile });
 }
 

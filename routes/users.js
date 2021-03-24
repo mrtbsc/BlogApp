@@ -26,12 +26,12 @@ router.route('/')
     .get( catchAsync( users.displayIndex ))
     .post( validateUser, catchAsync( users.createUser ))
 
-router.get('/profile', isLoggedIn, catchAsync( users.displayCurrentUser ))
-
 router.route('/:id')
     .get( catchAsync( users.displayUser ) )
     .put( validateUser, catchAsync( users.updateUser ) )
     .delete( catchAsync( users.deleteUser ) )
+
+router.get('/profile', isLoggedIn, catchAsync( users.displayCurrentUser ))
 
 router.get('/:id/edit', catchAsync( users.displayUpdateForm ))
 

@@ -32,7 +32,6 @@ module.exports.displayIndex =  async (req, res) => {
 module.exports.displayPost = async (req, res) => {
         const { post, author } = await findByIdAndPopulate(req, res);
         const isAuthor = tellIfAuthor( author, req );
-        console.log(post);
 
         res.render('posts/show', { post, isAuthor  } );
     }
@@ -48,19 +47,17 @@ module.exports.displayUpdateForm = async (req, res) => {
 /*** WRITE FUNCTIONS ***/
 
 module.exports.createPost = async (req, res) => {
-        const post = new Post(req.body.post);
-        post.date = new Date();
+        const p = new Post(req.body.post);
+        p.date = new Date();
         const author = req.user
-        post.author = author;
-        post.images = req.files.map(f => ({ url: f.path, filename: f.filename }));
+        p.author = author;
+        await p.save();
 
-        await post.save();
-
-        const category = await Category.findById(post.category._id);
-        category.posts.push(post);
+        const category = await Category.findById(p.category._id);
+        category.posts.push(p);
         category.save();
 
-        author.posts.push(post);
+        author.posts.push(p);
         author.save();
 
         req.flash('success', 'Successfully created post')
@@ -73,18 +70,11 @@ module.exports.updatePost = async (req, res) => {
             
         const oldPost = await Post.findByIdAndUpdate(id, { ...req.body.post } );
         const oldCategoryId = oldPost.category._id; // IdObject type
-
         
         if (!oldCategoryId.equals(newCategoryId)) {
             await Category.findByIdAndUpdate(oldCategoryId, { $pull: { posts: id } });
             await Category.findByIdAndUpdate(newCategoryId, { $push: { posts: id } });            
         }
-
-        console.log('files', req.files);
-
-        const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
-        oldPost.images.push(...imgs);
-        oldPost.save();
         
         req.flash('success', 'Successfully updated post')
         res.redirect(`/posts/${id}`);   
@@ -98,15 +88,6 @@ module.exports.deletePost = async (req, res) => {
 
         await Category.findByIdAndUpdate(category, { $pull: { posts: id } });
         await User.findByIdAndUpdate(author, { $pull: { posts: id } });
-
-        if (req.body.deleteImages) {
-            // We delete it from cloudinary
-            for (let filename of req.body.deleteImages) {
-                await cloudinary.uploader.destroy(filename);
-            }
-            // We also delete all the mongo references of each image
-            await post.updateOne({ $pull: { images: { filename: { $in: req.body.deleteImages } } } })
-        }
         
         req.flash('success', 'Successfully deleted post')
         res.redirect('/');
