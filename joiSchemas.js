@@ -5,9 +5,10 @@ module.exports.postJoiSchema = Joi.object({
         title: Joi.string().required(),
         category: Joi.any().required(),
         author: Joi.string(),
-        image: Joi.any(),
-        body: Joi.string().required()
-    }).required()
+        body: Joi.string().required(),
+        images: Joi.any()
+    }).required(),
+    deleteImages: Joi.array()
 });
 
 module.exports.categoryJoiSchema = Joi.object({
