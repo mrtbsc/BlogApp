@@ -53,6 +53,7 @@ module.exports.validateCategory = (req, res, next) => {
 module.exports.validateUser = (req, res, next) => {
     let schema = null;
     let redirectUrl = '';
+    console.log('method', req.method);
     if (req.method === 'PUT') {
         schema = editedUserJoiSchema;
         // We make the error appear in the same page it came from

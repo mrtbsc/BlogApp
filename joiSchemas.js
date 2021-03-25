@@ -1,4 +1,28 @@
-const Joi = require('joi');
+// schemas.js
+const BaseJoi = require('joi');
+const sanitizeHtml = require('sanitize-html');
+
+const extension = (joi) => ({
+    type: 'string',
+    base: joi.string(),
+    messages: {
+        'string.escapeHTML': '{{#label}} must not include HTML!'
+    },
+    rules: {
+        escapeHTML: {
+            validate(value, helpers) {
+                const clean = sanitizeHtml(value, {
+                    allowedTags: [],
+                    allowedAttributes: {},
+                });
+                if (clean !== value) return helpers.error('string.escapeHTML', { value })
+                return clean;
+            }
+        }
+    }
+});
+
+const Joi = BaseJoi.extend(extension)
 
 module.exports.postJoiSchema = Joi.object({
     post: Joi.object({
@@ -21,7 +45,7 @@ module.exports.categoryJoiSchema = Joi.object({
 module.exports.newUserJoiSchema = Joi.object({
     user: Joi.object({
         username: Joi.any().required(),
-        email: Joi.string().required().email(),
+        email: Joi.string().email().required(),
         bio: Joi.string(),
         avatar: Joi.string(),
         posts: Joi.array(),
@@ -33,7 +57,7 @@ module.exports.newUserJoiSchema = Joi.object({
 module.exports.editedUserJoiSchema = Joi.object({
     user: Joi.object({
         username: Joi.string().required(),
-        email: Joi.string().required().email(),
+        email: Joi.string().email().required(),
         bio: Joi.string().allow(''),
         avatar: Joi.string(),
         posts: Joi.array(),
