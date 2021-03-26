@@ -87,7 +87,8 @@ const scriptSrcUrls = [
     "https://kit.fontawesome.com/",
     "https://cdnjs.cloudflare.com/",
     "https://cdn.jsdelivr.net",
-    "https://code.jquery.com/"
+    "https://code.jquery.com/",
+    "https://cdn.ckeditor.com/"
 ];
 const styleSrcUrls = [
     "https://kit-free.fontawesome.com/",
@@ -121,7 +122,7 @@ app.use(
                 "'self'",
                 "blob:",
                 "data:",
-                "https://res.cloudinary.com/dec2ratwh/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT! 
+                "https://res.cloudinary.com/dec2ratwh/",
                 "https://images.unsplash.com/",
             ],
             fontSrc: ["'self'", ...fontSrcUrls],
