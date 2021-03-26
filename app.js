@@ -98,6 +98,7 @@ const styleSrcUrls = [
     "https://fonts.googleapis.com/",
     "https://use.fontawesome.com/",
     "https://cdn.jsdelivr.net/",                 // bootstrap source
+    "https://cdn.ckeditor.com/"
     
 ];
 const connectSrcUrls = [
@@ -124,6 +125,7 @@ app.use(
                 "data:",
                 "https://res.cloudinary.com/dec2ratwh/",
                 "https://images.unsplash.com/",
+                "https://cdn.ckeditor.com/"
             ],
             fontSrc: ["'self'", ...fontSrcUrls],
         },
