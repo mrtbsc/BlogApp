@@ -8,7 +8,6 @@ const { newUserJoiSchema, editedUserJoiSchema } = require('./joiSchemas');
 
 
 module.exports.isLoggedIn = (req, res, next) => {
-    console.log('enters isLoggedIn')
     if (!req.isAuthenticated()) {
         req.flash('error', 'You must be signed in first!');
         return res.redirect('/users/login');
@@ -53,7 +52,6 @@ module.exports.validateCategory = (req, res, next) => {
 module.exports.validateUser = (req, res, next) => {
     let schema = null;
     let redirectUrl = '';
-    console.log('method', req.method);
     if (req.method === 'PUT') {
         schema = editedUserJoiSchema;
         // We make the error appear in the same page it came from

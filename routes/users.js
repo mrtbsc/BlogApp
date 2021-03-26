@@ -16,7 +16,7 @@ router.route('/register')
 
 router.route('/login')
     .get( users.displayLoginForm )
-    .post( passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), users.loginUser )
+    .post( passport.authenticate('local', { failureFlash: true, failureRedirect: '/users/login' }), users.loginUser )
 
 router.get('/logout', isLoggedIn, users.logoutUser );
 
@@ -26,7 +26,8 @@ router.route('/')
     .get( catchAsync( users.displayIndex ))
     .post( validateUser, catchAsync( users.createUser ))
 
-router.get('/profile', isLoggedIn, catchAsync( users.displayCurrentUser ))
+router.get('/profile', isLoggedIn, catchAsync( users.displayCurrentUser ));
+router.get('/settings', isLoggedIn, users.displaySettings );
 
 router.route('/:id')
     .get( catchAsync( users.displayUser ) )

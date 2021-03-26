@@ -1,4 +1,32 @@
-/* section#buttons {
-    position: absolute;
-    bottom: 0;
-} */
+.alert-dismissible {
+    padding-right: 1rem;
+}
+
+.alert {
+    padding: .75rem 1rem;
+}
+
+@media only screen and (max-width: 425px) {
+    /* table {
+        font-size: .85rem;
+        min-width: 100%;
+    } */
+
+    .table th, .table td {
+        padding: 7px;
+    }
+
+    .date-column {
+        font-size: .75rem;
+    }
+
+    .user-column , .index-column, .mail-column, .details-text {
+        display: none;
+    }
+
+    table .details-button {
+        font-size: .75rem;
+        padding: 4px 6px;
+    }
+
+}

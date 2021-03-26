@@ -32,7 +32,6 @@ module.exports.displayIndex =  async (req, res) => {
 module.exports.displayPost = async (req, res) => {
         const { post, author } = await findByIdAndPopulate(req, res);
         const isAuthor = tellIfAuthor( author, req );
-        console.log(post);
 
         res.render('posts/show', { post, isAuthor  } );
     }
@@ -80,7 +79,6 @@ module.exports.updatePost = async (req, res) => {
             await Category.findByIdAndUpdate(newCategoryId, { $push: { posts: id } });            
         }
 
-        console.log('files', req.files);
 
         const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
         oldPost.images.push(...imgs);

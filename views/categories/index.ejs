@@ -54,10 +54,12 @@
                     <td><%= (index + 1) %> </td>
                     <td><%= category.name %> </td>
                     <td><%= category.dateCreated.toLocaleDateString() %> </td>
-                    <td><a href="/categories/<%= category._id %> " class="btn btn-secondary">
-                        <i class="fas fa-angle-double-right"></i>
-                        Details
-                    </a></td>
+                    <td>
+                        <a href="/categories/<%= category._id %> " class="btn btn-secondary details-button">
+                            <i class="fas fa-angle-double-right"></i>
+                            <div class="details-text">Details</div>
+                        </a>
+                    </td>
                     </tr>
                     <% }) %> 
                 </tbody>

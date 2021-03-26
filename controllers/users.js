@@ -21,9 +21,7 @@ module.exports.registerUser = async (req, res) => {
             req.flash('success', 'Welcome to the Blog!');
             res.redirect('/');
         })
-        // if (req.user.username === "Admin") {
-        //     req.session.isAdmin = true;
-        // }         
+      
     } 
     catch (e) {
         req.flash('error', e.message);
@@ -33,6 +31,10 @@ module.exports.registerUser = async (req, res) => {
 
 module.exports.displayLoginForm = (req, res) => {
     res.render('users/login');
+}
+
+module.exports.displaySettings = (req, res) => {
+    res.render('underConstruction');
 }
 
 module.exports.loginUser = (req, res) => {
@@ -63,16 +65,13 @@ module.exports.displayIndex = async (req, res) => {
         const currentUserId = req.user._id + "";
         query = { _id : { $ne:  mongoose.Types.ObjectId(currentUserId)}};
     } 
-    console.log(query);
     const users = await User.find( query );
     res.render('users/index', { users });
 }
 
 module.exports.displayCurrentUser = async (req, res) => {
     const user = req.user;
-    console.log(req.user);
     let isOwnProfile = true;
-    console.log(isOwnProfile);
     res.render('users/edit', { user , isOwnProfile });
 }
 

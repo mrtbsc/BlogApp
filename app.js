@@ -144,11 +144,6 @@ app.use((req, res, next) => {
     res.locals.error = req.flash('error');
     res.locals.currentUser = req.user;
     res.locals.isAdmin = req.session.isAdmin;
-    // console.log( 'before use', res.locals.snippets);
-    // if (!res.locals.snippets) {
-    //     res.locals.snippets = ""
-    // } ;
-    // console.log( 'from use', res.locals.snippets);
     next();
 })
 

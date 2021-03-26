@@ -44,20 +44,22 @@
                     <tr>
                     <th>Avatar</th>
                     <th>Name</th>
-                    <th>Email</th>
+                    <th class="mail-column">Email</th>
                     <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <% users.forEach( (user, index) => { %>
                     <tr>
-                    <td> <img src="../../img/avatar.png" height="50px" width="50px"> </td>
-                    <td><%= user.username %> </td>
-                    <td><%= user.email %> </td>
-                    <td><a href="/users/<%= user._id %> " class="btn btn-secondary">
-                        <i class="fas fa-angle-double-right"></i>
-                        Details
-                    </a></td>
+                        <td> <img src="../../img/avatar.png" height="50px" width="50px"> </td>
+                        <td><%= user.username %> </td>
+                        <td class="mail-column"><%= user.email %> </td>
+                        <td>
+                            <a href="/users/<%= user._id %> " class="btn btn-secondary details-button">
+                                <i class="fas fa-angle-double-right"></i>
+                                <div class="details-text">Details</div>
+                            </a>
+                        </td>
                     </tr>
                     <% }) %> 
                 </tbody>
