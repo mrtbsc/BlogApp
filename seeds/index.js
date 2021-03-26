@@ -5,15 +5,20 @@ const Post = require('../models/posts');
 const seedCategories = require('./seedCategories');
 const seedUsers = require('./seedUsers');
 
-mongoose.connect('mongodb://localhost:27017/blogApp', { useNewUrlParser: true, useUnifiedTopology: true})
-    .then(() => {
-        console.log("MONGO CONNECTION OPEN!!!")
-    })
-    .catch(err => {
-        console.log("OH NO MONGO CONNECTION ERROR!!!!")
-        console.log(err)
-    })
+require('dotenv').config()
+const dbUrl = process.env.DB_URL || "mongodb://localhost:27017/blogApp";
 
+
+/**************** CONNECT WITH THE DB ****************/
+mongoose.connect( dbUrl, { //'mongodb://localhost:27017/blogApp', { 
+    useNewUrlParser: true, 
+    useUnifiedTopology: true, 
+    useFindAndModify: false 
+});
+
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", () => { console.log("Database connected"); });
 
 const randNumberUpTo = (max) => Math.floor(Math.random() * (max));
 
@@ -43,9 +48,17 @@ const getRandomUser = async () => {
     }
 }
 
-Post.deleteMany({}).then( function() {
-    console.log("Post reset done before seeding");
-});
+const emptyPosts  = async () => {
+    try {
+    const postsExist = await Post.find();
+    if (postsExist) {
+        await Post.deleteMany({});
+        console.log("Post reset done before seeding");
+    }
+    } catch (e) {
+        throw e;
+    }
+}
 
 
 async function seedPosts () {
@@ -54,6 +67,7 @@ async function seedPosts () {
 
         await seedCategories();
         await seedUsers();
+        await emptyPosts();
         for(let i=1; i<7; i++) {
     
             p = new Post({

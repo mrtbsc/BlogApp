@@ -19,8 +19,11 @@ module.exports = async function () {
 
     const randNumberUpTo = (max) => Math.floor(Math.random() * (max));
     
-    await Category.deleteMany({});
-    console.log("Category reset done before seeding");
+    // const categoriesExist = await Category.find();
+    // if (categoriesExist) {
+    //     await Category.deleteMany({});
+    //     console.log("Category reset done before seeding");
+    // }
 
     const categories = ["Web Development", "Tech Gadgets", "Business", "Health & Wellness"];
     await Promise.all(categories.map( async (category) => {
