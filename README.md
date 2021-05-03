@@ -1,5 +1,5 @@
 # blog-app
-My first app connected to an online database. It allows to create posts with text and images. It implements user authentication and authorization, as well as basic security.
+My first app connected to an online database. It allows to create posts with text and images. It implements user authentication and authorization, as well as basic security. It can be accessed live [here](https://salty-plains-35347.herokuapp.com/).
 
 ## Motivation
 I was coursing the back-end lessons of [The Complete 2021 Web Development Bootcamp](https://www.udemy.com/course/the-complete-web-development-bootcamp/), which among other things taught me about REST apps. 
